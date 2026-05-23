@@ -10,12 +10,12 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
       <header className="border-b border-border/60 sticky top-0 z-50 bg-background/95 backdrop-blur-sm">
         <div className="container max-w-5xl mx-auto py-4 px-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
-            <Image src="/logo.png" alt="The Practical Engineer" width={32} height={32} className="rounded-sm" priority />
+            <Image src="/logo.png" alt="I Am Unhooked" width={32} height={32} className="rounded-sm" priority />
             <span
               className="font-bold text-lg tracking-tight"
               style={{ fontFamily: 'var(--font-playfair, serif)' }}
             >
-              The Practical Engineer
+              I Am Unhooked
             </span>
           </Link>
           <nav className="flex items-center gap-4">
@@ -26,7 +26,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
       </header>
       <main className="flex-1">{children}</main>
       <footer className="border-t py-8 text-center text-xs text-muted-foreground/60 tracking-wide">
-        <p>&copy; {new Date().getFullYear()} The Practical Engineer. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} I Am Unhooked. All rights reserved.</p>
       </footer>
     </div>
   )

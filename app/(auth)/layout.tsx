@@ -18,10 +18,10 @@ export default function AuthLayout({
         {/* Brand mark */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-4">
-            <Image src="/logo.png" alt="The Practical Engineer" width={56} height={56} className="rounded-2xl" priority />
+            <Image src="/logo.png" alt="I Am Unhooked" width={56} height={56} className="rounded-2xl" priority />
           </div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">The Practical Engineer</h1>
-          <p className="text-slate-400 text-sm mt-1">Your content, beautifully managed</p>
+          <h1 className="text-2xl font-bold text-white tracking-tight">I Am Unhooked</h1>
+          <p className="text-slate-400 text-sm mt-1">Your recovery journey starts here</p>
         </div>
 
         {/* Subtle glow behind card */}

@@ -63,8 +63,8 @@ export function Sidebar({ profile }: SidebarProps) {
       {/* Logo */}
       <div className="p-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 group hover:opacity-80 transition-opacity">
-          <Image src="/logo.png" alt="The Practical Engineer" width={36} height={36} className="rounded-lg shrink-0" />
-          <span className="font-bold text-white text-lg tracking-tight">The Practical Engineer</span>
+          <Image src="/logo.png" alt="I Am Unhooked" width={36} height={36} className="rounded-lg shrink-0" />
+          <span className="font-bold text-white text-lg tracking-tight">I Am Unhooked</span>
         </Link>
         <button
           className="md:hidden text-slate-400 hover:text-white p-1"
@@ -173,8 +173,8 @@ export function Sidebar({ profile }: SidebarProps) {
       {/* Mobile top bar */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-30 flex items-center justify-between px-4 h-14 bg-slate-950 border-b border-slate-800">
         <Link href="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
-          <Image src="/logo.png" alt="The Practical Engineer" width={32} height={32} className="rounded-lg shrink-0" />
-          <span className="font-bold text-white text-base tracking-tight">The Practical Engineer</span>
+          <Image src="/logo.png" alt="I Am Unhooked" width={32} height={32} className="rounded-lg shrink-0" />
+          <span className="font-bold text-white text-base tracking-tight">I Am Unhooked</span>
         </Link>
         <button
           onClick={() => setMobileOpen(true)}

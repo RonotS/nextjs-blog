@@ -20,11 +20,11 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "The Practical Engineer",
-    template: "%s | The Practical Engineer",
+    default: "I Am Unhooked",
+    template: "%s | I Am Unhooked",
   },
   description:
-    "Practical knowledge for engineers who ship. Deep dives, guides, and architecture insights.",
+    "Break free from porn addiction. Evidence-based recovery guides, personal stories, and practical tools for lasting change.",
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },

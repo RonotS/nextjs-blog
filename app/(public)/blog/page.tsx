@@ -7,7 +7,7 @@ export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Articles',
-  description: 'Practical knowledge for engineers who ship.',
+  description: 'Evidence-based recovery guides and personal stories for breaking free from porn addiction.',
 }
 
 interface BlogPageProps {
@@ -26,10 +26,10 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
     <div className="container max-w-5xl mx-auto py-12 px-4 space-y-10">
       {/* Page header */}
       <div className="space-y-2 border-b pb-8">
-        <p className="text-sm font-medium text-primary uppercase tracking-widest">The Practical Engineer</p>
+        <p className="text-sm font-medium text-primary uppercase tracking-widest">I Am Unhooked</p>
         <h1 className="text-4xl font-bold tracking-tight">All Articles</h1>
         <p className="text-muted-foreground text-base max-w-xl">
-          Practical knowledge for engineers who ship. Deep dives, guides, and architecture insights.
+          Evidence-based recovery guides, personal stories, and practical tools for lasting change.
         </p>
       </div>
 
