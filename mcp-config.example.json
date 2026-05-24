@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "iamunhooked-blog": {
+      "command": "npx",
+      "args": ["tsx", "/ABSOLUTE/PATH/TO/nextjs-blog/mcp-server.ts"],
+      "env": {
+        "BLOG_API_KEY": "fmblog_YOUR_API_KEY_HERE",
+        "BLOG_API_URL": "http://localhost:3000"
+      }
+    }
+  }
+}
