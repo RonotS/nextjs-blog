@@ -1,11 +1,11 @@
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { format } from 'date-fns'
 import type { Metadata } from 'next'
 import { getPublishedPosts } from '@/features/posts/queries'
 import { getPopularTags } from '@/features/posts/queries'
-import { AuthorAvatar } from '@/components/AuthorAvatar'
-import { readTime, cn } from '@/lib/utils'
+import { readTime } from '@/lib/utils'
 import type { PostWithRelations } from '@/features/posts/types'
 
 export const metadata: Metadata = {
@@ -30,180 +30,193 @@ export default async function HomePage({ searchParams }: HomePageProps) {
     getPopularTags(8),
   ])
 
-  const topArticles = posts.slice(0, 4)
-  const sidebarTags = [...popularTags].sort((a, b) => a.name.localeCompare(b.name))
+  if (posts.length === 0) {
+    return (
+      <div className="max-w-5xl mx-auto px-6 py-24 text-center">
+        <p className="text-muted-foreground">No articles yet — check back soon.</p>
+      </div>
+    )
+  }
+
+  const featured = posts[0]
+  const rest = posts.slice(1)
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-6">
-      {/* 3-column grid — collapses to single column on small screens */}
-      <div className="grid grid-cols-1 md:grid-cols-[200px_1fr_220px] gap-0">
+    <div className="animate-page">
+      {/* ── Featured Article Hero ── */}
+      <FeaturedHero post={featured} />
 
-        {/* ── Left sidebar ── */}
-        <aside className="hidden md:block pr-4">
-          {/* Nav */}
-          <nav className="flex flex-col gap-1 mb-6">
-            <div className="flex items-center gap-3 px-3 py-2 rounded-md bg-muted font-semibold text-sm text-foreground">
-              <span>🏠</span> Home
+      {/* ── Article Grid ── */}
+      {rest.length > 0 && (
+        <section className="max-w-5xl mx-auto px-6 py-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
+            {rest.map((post, i) => (
+              <ArticleCard
+                key={post.id}
+                post={post}
+                style={{ animationDelay: `${(i + 1) * 80}ms` }}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ── Tags ── */}
+      {popularTags.length > 0 && (
+        <section className="max-w-5xl mx-auto px-6 pb-20">
+          <div className="border-t border-border/60 pt-10">
+            <p className="editorial-label mb-5">Topics</p>
+            <div className="flex flex-wrap gap-3">
+              {popularTags.map((tag) => (
+                <Link
+                  key={tag.id}
+                  href={`/blog/tag/${tag.slug}`}
+                  className="border border-border rounded-full px-4 py-1.5 text-xs tracking-wide text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors"
+                >
+                  {tag.name}
+                </Link>
+              ))}
             </div>
-            <Link
-              href="/blog"
-              className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
-            >
-              <span>✏️</span> Articles
-            </Link>
-            <Link
-              href="/dashboard"
-              className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
-            >
-              <span>⚙️</span> Dashboard
-            </Link>
-          </nav>
-
-          {/* Topics */}
-          {sidebarTags.length > 0 && (
-            <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-3">Topics</p>
-              <ul className="flex flex-col gap-2">
-                {sidebarTags.map((tag) => (
-                  <li key={tag.id}>
-                    <Link
-                      href={`/blog/tag/${tag.slug}`}
-                      className="text-sm text-foreground hover:text-primary transition-colors"
-                    >
-                      #{tag.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </aside>
-
-        {/* ── Main feed ── */}
-        <main className="md:border-x md:border-border">
-          {posts.length === 0 ? (
-            <div className="py-16 text-center text-muted-foreground text-sm">
-              No articles yet — check back soon.
-            </div>
-          ) : (
-            posts.map((post, i) => (
-              <ArticleCard key={post.id} post={post} featured={i === 0} />
-            ))
-          )}
-        </main>
-
-        {/* ── Right sidebar ── */}
-        <aside className="hidden md:flex flex-col gap-4 pl-4">
-
-          {/* Popular Tags */}
-          {popularTags.length > 0 && (
-            <div className="bg-card border border-border rounded-lg p-4">
-              <h2 className="font-bold text-sm text-foreground mb-3">Popular Tags</h2>
-              <div className="flex flex-wrap gap-2">
-                {popularTags.map((tag) => (
-                  <Link
-                    key={tag.id}
-                    href={`/blog/tag/${tag.slug}`}
-                    className="bg-muted text-muted-foreground text-xs rounded-full px-3 py-1 hover:bg-accent hover:text-accent-foreground transition-colors"
-                  >
-                    #{tag.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Top Articles */}
-          {topArticles.length > 0 && (
-            <div className="bg-card border border-border rounded-lg p-4">
-              <h2 className="font-bold text-sm text-foreground mb-3">Top Articles</h2>
-              <ol className="flex flex-col gap-3">
-                {topArticles.map((post, i) => (
-                  <li key={post.id} className="flex gap-3 items-start">
-                    <span className="text-xl font-extrabold text-border leading-none min-w-[24px]">
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    <div>
-                      <Link
-                        href={`/blog/${post.slug}`}
-                        className="text-xs font-semibold text-foreground leading-snug hover:text-primary transition-colors line-clamp-2"
-                      >
-                        {post.title}
-                      </Link>
-                      <p className="text-xs text-muted-foreground mt-0.5">
-                        {post.author?.full_name ?? post.author?.email ?? 'Unknown'}
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          )}
-
-        </aside>
-      </div>
+          </div>
+        </section>
+      )}
     </div>
   )
 }
 
-// ── Article card sub-component ────────────────────────────────────────────────
+// ── Featured hero ─────────────────────────────────────────────────────────────
 
-function ArticleCard({ post, featured }: { post: PostWithRelations; featured: boolean }) {
+function FeaturedHero({ post }: { post: PostWithRelations }) {
   const authorName = post.author?.full_name ?? post.author?.email ?? 'Unknown'
   const mins = readTime(post.content ?? '')
   const publishedDate = post.published_at
-    ? format(new Date(post.published_at), 'MMM d')
+    ? format(new Date(post.published_at), 'MMMM d, yyyy')
     : null
 
   return (
-    <article
-      className={cn(
-        'bg-card px-5 py-4 border-b border-border',
-        featured && 'border-l-4 border-l-amber-400',
+    <section className="max-w-3xl mx-auto px-6 pt-20 pb-16 text-center border-b border-border/60">
+      {/* Category label */}
+      {post.category && (
+        <Link
+          href={`/blog/category/${post.category.slug}`}
+          className="editorial-label hover:text-foreground transition-colors"
+        >
+          {post.category.name}
+        </Link>
       )}
-    >
-      {/* Author row */}
-      <div className="flex items-center gap-2.5 mb-2.5">
-        <AuthorAvatar name={authorName} size={32} />
-        <div className="flex items-center gap-1.5 text-sm">
-          <span className="font-semibold text-foreground">{authorName}</span>
-          {publishedDate && (
-            <time
-              dateTime={post.published_at!}
-              className="text-muted-foreground text-xs"
-            >
-              {publishedDate}
-            </time>
-          )}
-        </div>
-      </div>
 
       {/* Title */}
       <Link href={`/blog/${post.slug}`}>
-        <h2 className="text-lg font-bold text-foreground leading-snug hover:text-primary transition-colors mb-2">
+        <h1 className="editorial-heading text-4xl md:text-5xl lg:text-6xl mt-4 mb-6 hover:opacity-70 transition-opacity">
+          {post.title}
+        </h1>
+      </Link>
+
+      {/* Excerpt */}
+      {post.excerpt && (
+        <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-6 leading-relaxed">
+          {post.excerpt}
+        </p>
+      )}
+
+      {/* Meta */}
+      <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+        <span>{authorName}</span>
+        {publishedDate && (
+          <>
+            <span className="text-border">·</span>
+            <time dateTime={post.published_at!}>{publishedDate}</time>
+          </>
+        )}
+        <span className="text-border">·</span>
+        <span>{mins} min read</span>
+      </div>
+    </section>
+  )
+}
+
+// ── Article card ──────────────────────────────────────────────────────────────
+
+function ArticleCard({
+  post,
+  style,
+}: {
+  post: PostWithRelations
+  style?: React.CSSProperties
+}) {
+  const authorName = post.author?.full_name ?? post.author?.email ?? 'Unknown'
+  const mins = readTime(post.content ?? '')
+  const publishedDate = post.published_at
+    ? format(new Date(post.published_at), 'MMM d, yyyy')
+    : null
+
+  return (
+    <article className="animate-fade-up group" style={style}>
+      {/* Cover image */}
+      {post.cover_image && (
+        <Link href={`/blog/${post.slug}`} className="block mb-4">
+          <div className="relative aspect-[16/10] overflow-hidden rounded-lg">
+            <Image
+              src={post.cover_image}
+              alt={post.title}
+              fill
+              className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+            />
+          </div>
+        </Link>
+      )}
+
+      {/* Category */}
+      {post.category && (
+        <Link
+          href={`/blog/category/${post.category.slug}`}
+          className="editorial-label hover:text-foreground transition-colors"
+        >
+          {post.category.name}
+        </Link>
+      )}
+
+      {/* Title */}
+      <Link href={`/blog/${post.slug}`}>
+        <h2 className="editorial-heading text-xl md:text-2xl mt-2 mb-2 group-hover:opacity-70 transition-opacity">
           {post.title}
         </h2>
       </Link>
 
+      {/* Excerpt */}
+      {post.excerpt && (
+        <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3 mb-3">
+          {post.excerpt}
+        </p>
+      )}
+
+      {/* Meta */}
+      <div className="flex items-center gap-2 text-xs text-muted-foreground">
+        <span>{authorName}</span>
+        {publishedDate && (
+          <>
+            <span className="text-border">·</span>
+            <time dateTime={post.published_at!}>{publishedDate}</time>
+          </>
+        )}
+        <span className="text-border">·</span>
+        <span>{mins} min read</span>
+      </div>
+
       {/* Tags */}
       {post.tags.length > 0 && (
-        <div className="flex gap-1.5 flex-wrap mb-3">
+        <div className="flex gap-2 flex-wrap mt-3">
           {post.tags.map((tag) => (
             <Link
               key={tag.id}
               href={`/blog/tag/${tag.slug}`}
-              className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+              className="text-xs text-muted-foreground/70 hover:text-foreground transition-colors"
             >
               #{tag.name}
             </Link>
           ))}
         </div>
       )}
-
-      {/* Footer row */}
-      <div className="flex justify-end">
-        <span className="text-xs text-muted-foreground">{mins} min read</span>
-      </div>
     </article>
   )
 }

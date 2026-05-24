@@ -42,7 +42,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.className} ${playfair.variable} ${dmSans.variable}`}
+        className={`${dmSans.className} ${playfair.variable} ${dmSans.variable}`}
       >
         <NextTopLoader showSpinner={false} />
         {children}

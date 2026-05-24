@@ -6,23 +6,23 @@
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
-    --foreground: 0 0% 7%;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 8%;
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 7%;
+    --card-foreground: 0 0% 8%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 7%;
-    --primary: 0 0% 12%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 12%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 0 0% 96%;
-    --accent-foreground: 0 0% 12%;
+    --popover-foreground: 0 0% 8%;
+    --primary: 0 0% 8%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 97%;
+    --secondary-foreground: 0 0% 8%;
+    --muted: 0 0% 97%;
+    --muted-foreground: 0 0% 50%;
+    --accent: 0 0% 97%;
+    --accent-foreground: 0 0% 8%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
-    --border: 0 0% 90%;
+    --border: 0 0% 92%;
     --input: 0 0% 90%;
     --ring: 0 0% 62%;
     --radius: 0.625rem;
@@ -93,19 +93,20 @@
     @apply bg-background text-foreground antialiased;
   }
 
-  /* Custom scrollbar */
+  /* Custom scrollbar — near-invisible */
   ::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
+    width: 4px;
+    height: 4px;
   }
   ::-webkit-scrollbar-track {
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    @apply bg-border rounded-full;
+    background: hsl(0 0% 85%);
+    border-radius: 9999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-muted-foreground/30;
+    background: hsl(0 0% 70%);
   }
 }
 
@@ -119,19 +120,55 @@
 }
 
 @layer utilities {
+  /* Page entrance animation */
   .animate-page {
-    animation: pageIn 0.25s ease-out both;
+    animation: pageIn 0.4s ease-out both;
   }
 
   @keyframes pageIn {
     from {
       opacity: 0;
-      transform: translateY(6px);
+      transform: translateY(8px);
     }
     to {
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  /* Fade-up for staggered elements */
+  .animate-fade-up {
+    animation: fadeUp 0.5s ease-out both;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Editorial utilities */
+  .font-editorial {
+    font-family: var(--font-playfair, Georgia, serif);
+  }
+
+  .editorial-heading {
+    font-family: var(--font-playfair, Georgia, serif);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+
+  .editorial-label {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: hsl(var(--muted-foreground));
   }
 
   .glass {
@@ -226,3 +263,43 @@
   flex: 1;
 }
 .tiptap-task-item > div > p { margin: 0; }
+
+/* ── Editorial prose overrides for article detail pages ── */
+.prose-editorial {
+  --tw-prose-body: hsl(0 0% 20%);
+  --tw-prose-headings: hsl(0 0% 8%);
+  --tw-prose-links: hsl(0 0% 8%);
+  --tw-prose-counters: hsl(0 0% 50%);
+  --tw-prose-bullets: hsl(0 0% 70%);
+  --tw-prose-quotes: hsl(0 0% 30%);
+  --tw-prose-quote-borders: hsl(0 0% 88%);
+  --tw-prose-hr: hsl(0 0% 92%);
+}
+
+.prose-editorial h2,
+.prose-editorial h3,
+.prose-editorial h4 {
+  font-family: var(--font-playfair, Georgia, serif);
+  letter-spacing: -0.01em;
+}
+
+.prose-editorial a {
+  color: hsl(0 0% 8%);
+  text-decoration-color: hsl(0 0% 75%);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s;
+}
+
+.prose-editorial a:hover {
+  text-decoration-color: hsl(0 0% 8%);
+}
+
+.prose-editorial blockquote {
+  border-left-color: hsl(0 0% 88%);
+  font-style: italic;
+  color: hsl(0 0% 35%);
+}
+
+.prose-editorial img {
+  border-radius: 0.5rem;
+}

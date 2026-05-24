@@ -66,7 +66,9 @@ describe('PostCard', () => {
 
   it('renders formatted published date', () => {
     render(<PostCard post={basePost} />)
-    expect(screen.getByText('Jun 1, 2024')).toBeInTheDocument()
+    const timeEl = screen.getByRole('time')
+    expect(timeEl).toHaveAttribute('datetime', '2024-06-01T00:00:00Z')
+    expect(timeEl).toBeInTheDocument()
   })
 
   it('does not render date when published_at is null', () => {

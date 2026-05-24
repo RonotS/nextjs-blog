@@ -70,17 +70,17 @@ export default async function TagPage({ params }: TagPageProps) {
     })) as PostWithRelations[]
 
   return (
-    <div className="container max-w-5xl mx-auto py-12 px-4 space-y-10">
-      <div className="space-y-2 border-b pb-8">
+    <div className="max-w-5xl mx-auto py-16 px-6 animate-page">
+      <div className="border-b border-border/60 pb-10 mb-12">
         <Link
           href="/blog"
-          className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-2"
+          className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
-          Back to Blog
+          Back to Articles
         </Link>
-        <p className="text-sm font-medium text-primary uppercase tracking-widest">Tag</p>
-        <h1 className="text-4xl font-bold tracking-tight">#{tag.name}</h1>
+        <p className="editorial-label mb-2">Tag</p>
+        <h1 className="editorial-heading text-4xl md:text-5xl">#{tag.name}</h1>
       </div>
       <PostList posts={posts} />
     </div>

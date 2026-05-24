@@ -5,8 +5,6 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { toast } from 'sonner'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 
 const schema = z.object({ email: z.string().email('Enter a valid email address') })
 type FormValues = z.infer<typeof schema>
@@ -40,9 +38,9 @@ export function SubscribeForm() {
 
   if (subscribed) {
     return (
-      <div className="rounded-xl border bg-card p-8 text-center max-w-lg mx-auto mt-12">
-        <p className="font-semibold text-lg">You&apos;re subscribed!</p>
-        <p className="text-muted-foreground text-sm mt-1">
+      <div className="border-t border-border/60 mt-14 pt-10 pb-4 text-center max-w-lg mx-auto">
+        <p className="editorial-heading text-xl">You&apos;re subscribed</p>
+        <p className="text-muted-foreground text-sm mt-2">
           You&apos;ll get an email when the next post is published.
         </p>
       </div>
@@ -50,29 +48,34 @@ export function SubscribeForm() {
   }
 
   return (
-    <div className="rounded-xl border bg-card p-8 text-center max-w-lg mx-auto mt-12">
-      <h2 className="text-xl font-bold mb-1">Stay in the loop</h2>
+    <div className="border-t border-border/60 mt-14 pt-10 pb-4 text-center max-w-lg mx-auto">
+      <h2 className="editorial-heading text-2xl mb-2">Stay updated</h2>
       <p className="text-muted-foreground text-sm mb-6">
         Get notified when new posts are published. No spam, unsubscribe anytime.
       </p>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex gap-2 max-w-sm mx-auto">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex gap-3 max-w-sm mx-auto">
         <label htmlFor="subscribe-email" className="sr-only">Email address</label>
-        <Input
+        <input
           {...register('email')}
           id="subscribe-email"
           type="email"
           placeholder="your@email.com"
-          className="flex-1"
+          className="flex-1 h-10 border-b border-border bg-transparent px-1 text-sm outline-none placeholder:text-muted-foreground/60 focus:border-foreground transition-colors"
           disabled={isSubmitting}
+          autoComplete="off"
         />
-        <Button type="submit" disabled={isSubmitting}>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="h-10 px-6 bg-foreground text-background text-sm font-medium rounded-full hover:opacity-80 transition-opacity disabled:opacity-50"
+        >
           {isSubmitting ? 'Subscribing...' : 'Subscribe'}
-        </Button>
+        </button>
       </form>
       {errors.email && (
         <p className="text-destructive text-xs mt-2">{errors.email.message}</p>
       )}
-      <p className="text-muted-foreground text-xs mt-3">No spam · Unsubscribe anytime</p>
+      <p className="text-muted-foreground/50 text-xs mt-4 tracking-wide">No spam · Unsubscribe anytime</p>
     </div>
   )
 }

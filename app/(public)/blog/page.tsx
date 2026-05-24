@@ -23,12 +23,11 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const totalPages = Math.ceil(total / limit)
 
   return (
-    <div className="container max-w-5xl mx-auto py-12 px-4 space-y-10">
+    <div className="max-w-5xl mx-auto py-16 px-6 animate-page">
       {/* Page header */}
-      <div className="space-y-2 border-b pb-8">
-        <p className="text-sm font-medium text-primary uppercase tracking-widest">I Am Unhooked</p>
-        <h1 className="text-4xl font-bold tracking-tight">All Articles</h1>
-        <p className="text-muted-foreground text-base max-w-xl">
+      <div className="border-b border-border/60 pb-10 mb-12">
+        <h1 className="editorial-heading text-4xl md:text-5xl mb-3">Articles</h1>
+        <p className="text-muted-foreground text-base max-w-xl leading-relaxed">
           Evidence-based recovery guides, personal stories, and practical tools for lasting change.
         </p>
       </div>
@@ -36,22 +35,22 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
       <PostList posts={posts} />
 
       {totalPages > 1 && (
-        <div className="flex items-center justify-center gap-3 pt-4">
+        <div className="flex items-center justify-center gap-3 pt-12">
           {page > 1 && (
             <Link
               href={`/blog?page=${page - 1}`}
-              className="px-5 py-2 border rounded-full text-sm font-medium hover:bg-muted transition-colors shadow-sm"
+              className="px-5 py-2 border border-border rounded-full text-sm hover:border-foreground/30 hover:text-foreground transition-colors text-muted-foreground"
             >
               ← Previous
             </Link>
           )}
           <span className="px-4 py-2 text-sm text-muted-foreground">
-            Page {page} of {totalPages}
+            {page} / {totalPages}
           </span>
           {page < totalPages && (
             <Link
               href={`/blog?page=${page + 1}`}
-              className="px-5 py-2 border rounded-full text-sm font-medium hover:bg-muted transition-colors shadow-sm"
+              className="px-5 py-2 border border-border rounded-full text-sm hover:border-foreground/30 hover:text-foreground transition-colors text-muted-foreground"
             >
               Next →
             </Link>

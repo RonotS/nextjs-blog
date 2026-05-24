@@ -15,12 +15,15 @@ export default function Error({
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center space-y-4">
-        <h1 className="text-3xl font-bold">Something went wrong</h1>
-        <p className="text-muted-foreground">An unexpected error occurred. Please try again.</p>
+      <div className="text-center space-y-5">
+        <p className="editorial-label">Error</p>
+        <h1 className="editorial-heading text-3xl">Something went wrong</h1>
+        <p className="text-muted-foreground text-sm max-w-xs mx-auto">
+          An unexpected error occurred. Please try again.
+        </p>
         <button
           onClick={reset}
-          className="inline-flex items-center justify-center rounded-md bg-primary text-primary-foreground h-10 px-6 font-medium hover:bg-primary/90 transition-colors"
+          className="h-10 px-6 bg-foreground text-background rounded-full text-sm font-medium inline-flex items-center justify-center hover:opacity-80 transition-opacity"
         >
           Try Again
         </button>
