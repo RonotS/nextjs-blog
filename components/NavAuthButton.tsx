@@ -72,18 +72,18 @@ export function NavAuthButton() {
 
   if (user === null) {
     return (
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 sm:gap-3">
         <Link
           href="/login"
-          className="text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors"
+          className="h-8 px-3 sm:px-4 text-xs font-medium uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors hidden sm:inline-flex items-center"
         >
           Login
         </Link>
         <Link
           href="/register"
-          className="inline-flex items-center justify-center bg-foreground text-background h-8 px-4 text-xs font-semibold uppercase tracking-wider hover:opacity-80 transition-opacity"
+          className="inline-flex items-center justify-center bg-foreground text-background h-8 px-4 sm:px-5 text-xs font-semibold uppercase tracking-wider rounded-full hover:opacity-80 transition-opacity whitespace-nowrap"
         >
-          Create Account
+          Sign Up
         </Link>
       </div>
     )
@@ -111,7 +111,7 @@ export function NavAuthButton() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        className="rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30 focus-visible:ring-offset-2 transition-opacity disabled:opacity-50"
+        className="inline-flex items-center gap-2.5 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30 focus-visible:ring-offset-2 transition-opacity disabled:opacity-50"
         aria-label="Account menu"
         disabled={busy}
       >
@@ -132,6 +132,7 @@ export function NavAuthButton() {
             flexShrink: 0,
             opacity: busy ? 0.5 : 1,
             transition: 'opacity 150ms',
+            boxShadow: '0 0 0 2px hsl(0 0% 90%)',
           }}
           aria-hidden="true"
         >
